@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Australian localities by postcode finder</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <form>
+      <input type="text" name="q" />
+      <input type="submit" value="Search" />
+    </form>
+    <div>
+      <pre id="data"></pre>
+    </div>
+  </body>
+
+  <script defer>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+      const postalCodes = data?.q?.replace(/\s/g, "");
+      if (!postalCodes?.length) {
+        document.getElementById("data").innerHTML = "";
+        return;
+      }
+      fetch(`http://localhost:4006/api/search/by-postcode?q=${postalCodes}`)
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("data").innerHTML = JSON.stringify(
+            data,
+            null,
+            2
+          );
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  </script>
+</html>
