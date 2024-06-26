@@ -34,7 +34,7 @@ Enter in your desired postcodes and have a JSON response appear at the bottom of
 # API Example
 
 `GET`
-`http:localhost:4006/api/search/by-postcode?q=2000`
+`http:localhost:4006/api/search/by-postcode?q=2017`
 
 Will query all postcodes from _australian_postcodes.json_ and return the following JSON response example.
 
